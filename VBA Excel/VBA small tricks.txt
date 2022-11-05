@@ -1,0 +1,91 @@
+VBA & EXCEL
+
+En el editor de VBA en excel marcar la casilla de "Require varibale declaration" en Tool-options
+
+Los corchetes indican parametros opcionales
+
+En los formularios "Modal" significa que el usuario puede mover la ventana e interactuar con otras o no
+
+Crear una variable para nombrar reportes que se bajan de SAP :
+Dim filename As String: filename = "Export_" & Format(Now, "ddMMyyMMss") & ".xls
+
+Crear un ciclo en excel sustituye la variable de "ultimafila"
+For i = 2 to objSheet.UsedRange.Rows.Count
+
+Para hacer saltos de linea en mensajes al usuario usar Vbnewline
+
+Para usar letras que se confunden con parametros, usa como caracter escape la barra invertida:  \
+
+En busqueda se puede usar el comodin Like "*texto a buscar*"
+
+Para usar un caja de preguntas en lugar de msg usar qmsg
+
+Para  hacer una pausa en un script (en milisegundos) usar WScript.Sleep()
+
+Ejemplo Uso For:
+Sub test ()
+    Set r = range("A1:A5")    ' crea una variable "r" y le asigna un rango de celdas
+    For Each c In r: c.Value = c.Row: Next ' Crea una variable dentro del rango "r" llamada c y
+    le da valor    
+End Sub
+
+Tambien en los For puede usarse "step" para indicar sobre cuantos pasos debe avanzar el ciclo 
+
+Para imprimir algo en la pantalla de Inmediato en el editor de VBA excel usar Debug.Print
+
+Ejemplo función:
+Function nombre2(ByVal arg As Integer) As String
+' donde nombre2 es el nombre de la función, arg es el argumento 
+(a esta funcion le tenemos que pasar un Valor entero en algun proceso y devuelve un string)
+    IF arg < 2 Then
+        nombre2 = "arg es menor a 2"
+    ElseIf arg <= 5 Then
+        nombre2 = "arg es mayor a 2 y menor o igual a 5"
+    Else
+        nombre2 = "arg es mayor a 5"
+    End If
+
+Tanto en las funciones como en los procedimientos (sub) se puede usar ByVal o ByRef, ByVal lee el valor pero no lo cambia, mientras
+que ByRef lee el valor y lo puede cambiar
+
+End Function
+
+Otra forma de buscar la ultima celda con datos de una fila :
+Dim iCell As Integer
+iCell = ThisWorkbook.Sheets("Hoja1").Cells(Rows.Count, 1).End(xlUp).Offset(1, 0),Row   
+
+Se puede usar el IIf como condicional rapida en variables:
+IIf(Me.chkActive.Value, 1, 0)
+
+La funcion "Split" permite separar un string en base a un caracter 
+
+La funcion Uboun o Lbound devuelve los limites superiores o inferiores de una variable array
+
+En cualquier funcion puedes acceder a las propiedades directamente colocando su nombre seguido de := 
+ejemplo Filename:= thisworkboow.Path & "\archivo_exportado_" & Format (Now, "ddMMyy_HHmmss") & ".xlsx
+
+Las funciones InStr y InStrRev buscan coincidencias de caracteres dentro de un variable string, similar a las funciones
+de excel para conocer la posicion de un caracter dentro de un texto
+
+La función Mid es igual que en las celdas de excel
+
+La expresión On Error Resume Next hace que se salten los errores On Error Go To 0 vuelve a activar los errores 
+
+Se pueden crear variables como si fueran tipos de objetos de un formulario:
+Dim lbx As MSforms.ListBox
+
+
+La función Replace puede reemplazar caracteres en strings, ya sea de variables o de celdas que se toman como referencia
+
+---------------------------------       SAP     -------------------------------------------
+
+En SAP para saber el nombre tecnico de un campo o de cualquier elemento:
+Presionar F1 (help) y presionar el cuarto boton
+
+En SAP las tablas o GRIDS empiezan en 0 (primera fila)siempre utilizar RowCount - 1
+Si se desea obtener datos mediante GetCellValue en base a RowCount se debe convertir a Int:
+tbl = session.findById("wnd[0]/usr/cntlGRID1/shellcont/shell")
+tbl.GetCellValue(CInt(tbl.RowCount - 1 ), "NombreColumna")
+
+
+
